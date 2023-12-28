@@ -36,7 +36,7 @@
             !empty($_POST['login'])
         ) : ?>
             <div class="alert alert-success" role="alert">
-                Ви вказали імейл <?= $_POST['login']; ?>
+                Ви вказали логін <?= $_POST['login']; ?>
             </div>
         <?php endif; ?>
 
@@ -46,14 +46,28 @@
         //require "authentication.php";
         $login = 'test';
         $password = '123';
-            if (!empty($_POST['login']) ) {
-                    if ($_POST['login'] == $login && $_POST['password'] == $password)
-                        { ?>
-                        <div class="alert alert-success" role="alert">
-                            Ви успішно автентифікувались з логіном <?= $_POST['login']; ?>
-                        </div>
-                    <?php } ?>
+        if (!empty($_POST['login'])) {
+            if ($_POST['login'] == $login && $_POST['password'] == $password) { ?>
+
+                <div class="alert alert-success" role="alert">
+                    Ви успішно автентифікувались з логіном <?= $_POST['login']; ?>
+                </div>
+
+            <?php } elseif ($_POST['login'] == $login) { ?>
+
+                <div class="alert alert-success" role="alert">
+                    Невірно вказаний пароль
+                </div>
+
+            <?php } else { ?>
+
+                <div class="alert alert-success" role="alert">
+                    Такого логіну не існує
+                </div>
+
             <?php } ?>
+
+        <?php } ?>
 
 
 
@@ -69,10 +83,10 @@
         <button type="submit" class="btn btn-primary">Submit</button>
         <hr>
 
+
+       <hr>
         <br>
-        <?php
-        var_dump($_POST);
-        ?>
+        <?php print_r($_POST); ?>
 
     </form>
 
