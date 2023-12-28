@@ -27,27 +27,53 @@
 <div class="conteiner">
 
 
-    <form method="post" action="index.php" >
+    <form method="post" action="index.php">
 
-        <?php
-        var_dump($_POST);
-        ?>
+        <?= var_dump($_POST); ?>
         <br><br><br>
 
+        <?php if (
+            !empty($_POST['login'])
+        ) : ?>
+            <div class="alert alert-success" role="alert">
+                Ви вказали імейл <?= $_POST['login']; ?>
+            </div>
+        <?php endif; ?>
+
+        <hr>
+
+        <?php
+        //require "authentication.php";
+        $login = 'test';
+        $password = '123';
+            if (!empty($_POST['login']) ) {
+                    if ($_POST['login'] == $login && $_POST['password'] == $password)
+                        { ?>
+                        <div class="alert alert-success" role="alert">
+                            Ви успішно автентифікувались з логіном <?= $_POST['login']; ?>
+                        </div>
+                    <?php } ?>
+            <?php } ?>
+
+
+
         <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label" >Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" >
+            <label for="exampleInputEmail1" class="form-label">Your login</label>
+            <input type="text" class="form-control" name="login" required>
         </div>
         <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1">
+            <input type="password" class="form-control" name="password" required>
         </div>
 
         <button type="submit" class="btn btn-primary">Submit</button>
+        <hr>
+
         <br>
         <?php
         var_dump($_POST);
         ?>
+
     </form>
 
 
