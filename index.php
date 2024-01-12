@@ -1,4 +1,8 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -16,7 +20,6 @@
 
 <body>
 
-
 <style>
     /* CSS стилі для форми */
     form {
@@ -26,58 +29,65 @@
 
 <div class="conteiner">
 
+    <?php
+    //var_dump($_SESSION)
+    ?>
+    <br><br><br>
+    <?php
+    if (!isset($_SESSION['counter'])) {
+        echo 'SESSION NUM = ' . $_SESSION['counter'] = 1;
+    } else {
+        $_SESSION['counter']++;
+        echo 'SESSION NUM = ' . $_SESSION['counter'];
+        }
+    ?>
 
-    <form method="post" action="index.php">
+    <?php if (
+        !empty($_POST['login'])
+    ) : ?>
+        <div class="alert alert-success" role="alert">
+            Ви вказали логін <?= $_POST['login']; ?>
+        </div>
+    <?php endif; ?>
 
-        <?= var_dump($_POST); ?>
-        <br><br><br>
+    <hr>
 
-        <?php if (
-            !empty($_POST['login'])
-        ) : ?>
+    <?php
+
+    $login = 'test';
+    $password = '123';
+    if (!empty($_POST['login'])) {
+        if ($_POST['login'] == $login && $_POST['password'] == $password) { ?>
+
             <div class="alert alert-success" role="alert">
-                Ви вказали логін <?= $_POST['login']; ?>
+                Ви успішно автентифікувались з логіном <?= $_POST['login']; ?>
             </div>
-        <?php endif; ?>
 
-        <hr>
+        <?php } elseif ($_POST['login'] == $login) { ?>
 
-        <?php
-        //require "authentication.php";
-        $login = 'test';
-        $password = '123';
-        if (!empty($_POST['login'])) {
-            if ($_POST['login'] == $login && $_POST['password'] == $password) { ?>
+            <div class="alert alert-success" role="alert">
+                Невірно вказаний пароль
+            </div>
 
-                <div class="alert alert-success" role="alert">
-                    Ви успішно автентифікувались з логіном <?= $_POST['login']; ?>
-                </div>
+        <?php } else { ?>
 
-            <?php } elseif ($_POST['login'] == $login) { ?>
-
-                <div class="alert alert-success" role="alert">
-                    Невірно вказаний пароль
-                </div>
-
-            <?php } else { ?>
-
-                <div class="alert alert-success" role="alert">
-                    Такого логіну не існує
-                </div>
-
-            <?php } ?>
+            <div class="alert alert-success" role="alert">
+                Такого логіну не існує
+            </div>
 
         <?php } ?>
 
+    <?php } ?>
 
+    <form method="post" action="index.php">
 
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Your login</label>
-            <input type="text" class="form-control" name="login" required>
+            <input type="text" class="form-control" name="login">
         </div>
         <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">Password</label>
-            <input type="password" class="form-control" name="password" required>
+            <input type="password" class="form-control" name="password">
         </div>
 
         <button type="submit" class="btn btn-primary">Submit</button>
@@ -85,8 +95,19 @@
 
 
        <hr>
+
+<!--        <label for="submitBtn">Delete SESSION:</label>-->
+<!--        <button type="submit" class="btn btn-danger" name="submitButton">Danger</button>-->
+
+        <?php
+//        if (isset($_POST['submitButton'])) {
+//            unset($_SESSION['counter']);
+//            echo "Текст, який виведеться після натискання кнопки";
+//        }
+//        ?>
+
         <br>
-        <?php print_r($_POST); ?>
+        <?php print_r($_POST);        ?>
 
     </form>
 
