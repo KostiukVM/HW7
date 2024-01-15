@@ -64,22 +64,8 @@ session_start();
                     'password' => $_POST['password']
             ];
 
+        } ?>
 
-        if ($_POST['login'] == $login && $_POST['password'] == $password) { ?>
-
-            <div class="alert alert-success" role="alert">
-                Ви успішно автентифікувались з логіном <?= $_POST['login']; ?>
-            </div>
-
-        <?php } elseif ($_POST['login'] == $login) { ?>
-
-            <div class="alert alert-success" role="alert">
-                Невірно вказаний пароль
-            </div>
-
-        <?php } ?>
-
-        <?php  } ?>
 
     <?php if (!empty(!$_SESSION['aut']) == true) {
     ?>
@@ -102,28 +88,29 @@ session_start();
 
 
        <hr>
-
-<!--        <label for="submitBtn">Delete SESSION:</label>-->
-<!--        <button type="submit" class="btn btn-danger" name="submitButton">Danger</button>-->
-
-        <?php
-//        if (isset($_POST['submitButton'])) {
-//            unset($_SESSION['counter']);
-//            echo "Текст, який виведеться після натискання кнопки";
-//        }
-//        ?>
-
         <br>
-        <?php print_r($_SESSION);        ?>
 
     </form>
-    <?php
-    } else {
-    ?>
-    <h3>Welcome <span class="badge bg-secondary"> <?php  echo$_POST['login'] ?> </span></h3>
+    <?php } else { if ($_POST['login'] == $login && $_POST['password'] == $password) {  ?>
 
+        <div class="alert alert-success" role="alert">
+            Ви успішно автентифікувались з логіном <?= $_POST['login']; ?>
+        </div>
+        <?php } elseif ($_POST['login'] == $login && $_POST['password'] !== $password) { ?>
+
+        <div class="alert alert-success" role="alert">
+            Невірно вказаний пароль
+        </div>
+    <?php  } else { ?>
+
+    <h3>Your login is incorrect >
+    <?php  echo 'You use ' . $_POST['login'] ?> </span></h3>
+
+        <hr>
+        <br>
     <?php
-    }
+    } }
+    print_r($_SESSION);
     ?>
 
 </div>
