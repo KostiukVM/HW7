@@ -56,7 +56,15 @@ session_start();
 
     $login = 'test';
     $password = '123';
+    $_SESSION['aut'] = false;
     if (!empty($_POST['login'])) {
+            $_SESSION['aut'] = true;
+            $_SESSION["user"][] = [
+                    'login'    => $_POST['login'],
+                    'password' => $_POST['password']
+            ];
+
+
         if ($_POST['login'] == $login && $_POST['password'] == $password) { ?>
 
             <div class="alert alert-success" role="alert">
@@ -69,15 +77,14 @@ session_start();
                 Невірно вказаний пароль
             </div>
 
-        <?php } else { ?>
-
-            <div class="alert alert-success" role="alert">
-                Такого логіну не існує
-            </div>
-
         <?php } ?>
 
-    <?php } ?>
+        <?php  } ?>
+
+    <?php if (!empty(!$_SESSION['aut']) == true) {
+    ?>
+
+
 
     <form method="post" action="index.php">
 
@@ -107,10 +114,17 @@ session_start();
 //        ?>
 
         <br>
-        <?php print_r($_POST);        ?>
+        <?php print_r($_SESSION);        ?>
 
     </form>
+    <?php
+    } else {
+    ?>
+    <h3>Welcome <span class="badge bg-secondary"> <?php  echo$_POST['login'] ?> </span></h3>
 
+    <?php
+    }
+    ?>
 
 </div>
 
