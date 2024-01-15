@@ -56,7 +56,7 @@ session_start();
 
     $login = 'test';
     $password = '123';
-    $_SESSION['aut'] = false;
+    $_SESSION['auth'] = false;
     if (!empty($_POST['login'])) {
             $_SESSION['auth'] = true;
             $_SESSION["user"][] = [
