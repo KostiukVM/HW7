@@ -58,7 +58,7 @@ session_start();
     $password = '123';
     $_SESSION['aut'] = false;
     if (!empty($_POST['login'])) {
-            $_SESSION['aut'] = true;
+            $_SESSION['auth'] = true;
             $_SESSION["user"][] = [
                     'login'    => $_POST['login'],
                     'password' => $_POST['password']
@@ -67,7 +67,7 @@ session_start();
         } ?>
 
 
-    <?php if (!empty(!$_SESSION['aut']) == true) {
+    <?php if (!empty(!$_SESSION['auth']) == true) {
     ?>
 
 
