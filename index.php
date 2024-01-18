@@ -62,15 +62,11 @@ session_start();
             $_SESSION["user"][] = [
                     'login'    => $_POST['login'],
                     'password' => $_POST['password']
-            ];
-
-        } ?>
-
-
-    <?php if (!empty(!$_SESSION['auth']) == true) {
+            ];   }
     ?>
 
 
+    <?php if (!empty(!$_SESSION['auth']) == true) {    ?>
 
     <form method="post" action="index.php">
 
@@ -91,7 +87,14 @@ session_start();
         <br>
 
     </form>
-    <?php } else { if ($_POST['login'] == $login && $_POST['password'] == $password) {  ?>
+    <?php } else {
+        // відкрити файл і знайти логін пароль
+
+
+
+
+
+        if ($_POST['login'] == $login && $_POST['password'] == $password ) {  ?>
 
         <div class="alert alert-success" role="alert">
             Ви успішно автентифікувались з логіном <?= $_POST['login']; ?>
@@ -109,10 +112,51 @@ session_start();
         <hr>
         <br>
     <?php
-    } }
-    print_r($_SESSION);
+        } }
+      //  print_r($_SESSION);
     ?>
+    <hr><hr>
+    <br>
+    <?php
+        // add to file
+      if(isset($_POST['login']) && isset($_POST['password'])) {
+          $delimetr = ',,';
+          $stringToData = $_POST['login'] . $delimetr . $_POST['password'] . PHP_EOL;
+          $dataToString = explode($delimetr, $stringToData);
 
+          $fileWrite = fopen("data.txt", "a+") or die ("Couldn't read the file");
+          fwrite($fileWrite, $stringToData);
+          fclose($fileWrite);
+      }
+
+//        $fileRead = fopen("data.txt", "r") or die ("Couldn't read the file");
+//        while(!feof($fileRead)) {
+//            echo (fgets($fileRead));
+//        }
+//        fclose($fileRead);
+
+        //для видалення 1 строки
+    $fileRead = fopen("data.txt", "a+") or die ("Couldn't read the file");
+
+    while(!feof($fileRead)) {
+     $str = fgets($fileRead);
+         if (empty($str)){
+         $user = explode(',,', $str);
+         $users[]=$user;
+        }
+    }
+    fclose($fileRead);
+
+    echo 'users =  ';
+    var_dump($users);
+       // для видалення всього вмісту файлу
+        function clearFile () {
+            $clear = fopen('data.txt' , "w+" );
+        }
+   // clearFile();
+
+
+    ?>
 </div>
 
 </body>
