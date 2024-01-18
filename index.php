@@ -129,29 +129,27 @@ session_start();
           fclose($fileWrite);
       }
 
-//        $fileRead = fopen("data.txt", "r") or die ("Couldn't read the file");
-//        while(!feof($fileRead)) {
-//            echo (fgets($fileRead));
-//        }
-//        fclose($fileRead);
 
-        //для видалення 1 строки
-    $fileRead = fopen("data.txt", "a+") or die ("Couldn't read the file");
+        //для видалення 0 строки
+    $num = 0;
+    $fileRead = 'data.txt';
+    $fileContent = file($fileRead, FILE_IGNORE_NEW_LINES);
 
-    while(!feof($fileRead)) {
-     $str = fgets($fileRead);
-         if (empty($str)){
-         $user = explode(',,', $str);
-         $users[]=$user;
-        }
+    unset($fileContent[$num]);
+    clearFile();
+    for ($i = 0; $i < count($fileContent); $i+=2) {
+        $line = $fileContent[$i] . $delimetr . $fileContent[$i+1] . PHP_EOL;
+        file_put_contents($fileRead, $line, FILE_APPEND);
     }
-    fclose($fileRead);
 
-    echo 'users =  ';
-    var_dump($users);
+    echo '<pre>';
+    var_dump($fileContent);
+    echo '</pre>';
+
        // для видалення всього вмісту файлу
         function clearFile () {
             $clear = fopen('data.txt' , "w+" );
+            fclose($clear);
         }
    // clearFile();
 
